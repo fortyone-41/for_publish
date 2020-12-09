@@ -10,7 +10,7 @@ function AddTodo() {
             <input 
             type="text" 
             id="inputTitle"
-            /> 
+            />  
             <button className='at' onClick={addTodo}>Add Todo</button>
         </p> 
     )
