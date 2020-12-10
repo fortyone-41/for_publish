@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 
 
-function useInputValue(defaultValue='') {
+function useInputValue(defaultValue = '') {
     const [value, setValue] = useState(defaultValue)
 
     return {
@@ -22,17 +22,17 @@ function AddTodo({ onCreate }) {
     function submitHandler(event) {
         event.preventDefault()
 
-        if(input.value().trim()) {
+        if (input.value().trim()) {
             onCreate(input.value())
             input.clear()
         }
     }
 
     return (
-        <form style={{ marginBottom: '1rem' }} onSubmit={submitHandler} > 
-            <input {...input.bind} />   
+        <form style={{ marginBottom: '1rem' }} onSubmit={submitHandler} >
+            <input {...input.bind} />
             <button className='at' type='submit'>Add Todo</button>
-        </form> 
+        </form>
     )
 }
 
