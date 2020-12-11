@@ -7,7 +7,7 @@ import Modal from './Modal/Modal'
 const AddTodo = React.lazy(() => new Promise(resolve => {
   setTimeout(() => {
     resolve(import('./Todo/AddTodo'))
-  }, 3000)
+  }, 2000)
 }))
 
 function App() {
@@ -20,7 +20,7 @@ useEffect(() => {
   .then(response => response.json())
   .then(todos => {
     setTimeout(() => {
-      setLoading(false)
+    setLoading(false)
     setTodos(todos)
     }, 2000)
   })
