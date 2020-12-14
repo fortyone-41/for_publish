@@ -3,6 +3,8 @@ import TodoList from './Todo/TodoList'
 import Context from './context'
 import Loader from './Loader'
 import Modal from './Modal/Modal'
+import Header from './Header'
+import Game from './Game'
 
 const AddTodo = React.lazy(() => new Promise(resolve => {
   setTimeout(() => {
@@ -13,29 +15,30 @@ const AddTodo = React.lazy(() => new Promise(resolve => {
 function App() {
   const [todos, setTodos] = React.useState([])
   const [loading, setLoading] = React.useState(true)
+  const [gamer, setGame] = React.useState([])
 
 
-useEffect(() => {
-  fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
-  .then(response => response.json())
-  .then(todos => {
-    setTimeout(() => {
-    setLoading(false)
-    setTodos(todos)
-    }, 2000)
-  })
-}, [])
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
+      .then(response => response.json())
+      .then(todos => {
+        setTimeout(() => {
+          setLoading(false)
+          setTodos(todos)
+        }, 2000)         
+      })
+  }, [])
 
-function toggleTodo(id) {
-  setTodos(
-    todos.map(todo => {
-    if(todo.id === id){
-      todo.completed = !todo.completed;
-    }
-    return todo;
-  })
-  )
-}
+  function toggleTodo(id) {
+    setTodos(
+      todos.map(todo => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      })
+    )
+  }
 
   function removeTodo(id) {
     setTodos(todos.filter(todo => todo.id !== id))
@@ -49,22 +52,26 @@ function toggleTodo(id) {
     }]))
   }
 
+  function game() {
+  
+    setGame(gamer.concat(''))
+  }
 
-  return  (
-    <Context.Provider value={{removeTodo}}>
-     <div className='wrapper' >
-       <h1>React tutorial</h1> 
-       <Modal />
-       <React.Suspense fallback = {<p>Loading....</p>}>
-       <AddTodo onCreate={addTodo} />   
-       </React.Suspense>
-         
+  return (
+    <Context.Provider value={{ removeTodo }}>
+      <div className='wrapper' >
+        <Header />
+        <h1>React tutorial</h1>
+        <Modal />
+        <React.Suspense fallback={<p>Loading....</p>}>
+          <AddTodo onCreate={addTodo} />
+        </React.Suspense>
 
         {loading && <Loader />}
-      {todos.length ? <TodoList todos={todos} onToggle={toggleTodo} /> : loading ? null : <p>No ToDo's</p> } 
-     
-     </div> 
-     </Context.Provider>
+        {todos.length ? <TodoList todos={todos} onToggle={toggleTodo} /> : loading ? null : <p>No ToDo's</p>}
+        <Game onClicker={game} gamer={gamer} />
+      </div>
+    </Context.Provider>
   )
 }
 
